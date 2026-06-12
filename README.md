@@ -18,6 +18,40 @@ A full-stack **Service Request Management Application** for homeowners to book a
 
 ---
 
+## Screenshots
+
+### 🏠 Home Page
+![Home Page](screenshots/screenshot-01-home.png)
+
+### 🔐 Login Page
+![Login Page](screenshots/screenshot-02-login.png)
+
+### 📋 Dashboard — Empty State
+![Dashboard Empty](screenshots/screenshot-03-dashboard-empty.png)
+
+### ➕ New Request — Basic Info
+![New Request Form](screenshots/screenshot-04-new-request-form.png)
+
+### 📍 New Request — Location & Schedule
+![New Request Location](screenshots/screenshot-05-new-request-location.png)
+
+### ✏️ New Request — Filled In
+![New Request Filled](screenshots/screenshot-06-new-request-filled.png)
+
+### 🖼️ New Request — Photo Upload Preview
+![Image Upload](screenshots/screenshot-07-image-upload.png)
+
+### 🔍 Request Detail — Status Update & Danger Zone
+![Request Detail](screenshots/screenshot-08-request-detail.png)
+
+### 📊 Dashboard — In Progress Status
+![Dashboard In Progress](screenshots/screenshot-09-dashboard-inprogress.png)
+
+### ✅ Dashboard — Completed Status + Toast Notification
+![Dashboard Completed](screenshots/screenshot-10-dashboard-completed.png)
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
@@ -66,6 +100,7 @@ zepnest/
 │   │   └── pages/       # Home, Login, Register, Dashboard, CreateRequest, RequestDetail
 │   ├── index.html
 │   └── vite.config.js
+├── screenshots/         # App screenshots for README
 ├── schema.sql
 ├── postman_collection.json
 └── README.md
@@ -95,8 +130,6 @@ This creates the `zepnest_db` database, all tables, and seed data.
 ```bash
 cd backend
 npm install
-
-# Copy env template and fill in your values
 cp .env.example .env
 # Edit .env: set DB_USER, DB_PASSWORD, JWT_SECRET
 ```
@@ -127,10 +160,7 @@ Swagger docs at **http://localhost:5000/api/docs**
 ```bash
 cd frontend
 npm install
-
 cp .env.example .env
-# Set VITE_API_BASE_URL if needed (default: /api — proxied via Vite)
-
 npm run dev
 ```
 
@@ -201,16 +231,10 @@ All endpoints require `Authorization: Bearer <token>` header.
 Import `postman_collection.json` into Postman.
 The **Register** and **Login** requests automatically set the `token` collection variable.
 
-Update the `baseUrl` variable to:
+Update the `baseUrl` collection variable to:
 ```
 https://zepnest-backend-yx7o.onrender.com/api
 ```
-
----
-
-## Screenshots
-
-> _Add screenshots of: Home page, Login, Dashboard (grid view), Create Request form, Request Detail with status update_
 
 ---
 
