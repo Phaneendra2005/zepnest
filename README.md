@@ -4,17 +4,68 @@ A full-stack **Service Request Management Application** for homeowners to book a
 
 ---
 
+## 🌐 Live Demo
+
+| | URL |
+|---|---|
+| 🖥️ **Frontend (Live App)** | **https://zepnest.vercel.app** |
+| ⚙️ **Backend API** | **https://zepnest-backend-yx7o.onrender.com** |
+| 📖 **API Docs (Swagger)** | **https://zepnest-backend-yx7o.onrender.com/api/docs** |
+| 💾 **Database** | PostgreSQL on Render (Oregon, US West) |
+| 📦 **GitHub Repository** | **https://github.com/Phaneendra2005/zepnest** |
+
+> ⚠️ **Note:** The backend is hosted on Render's free tier. It may take **30–60 seconds** to respond on the first visit after a period of inactivity (cold start). Subsequent requests will be fast.
+
+---
+
+## Screenshots
+
+### 🏠 Home Page
+![Home Page](screenshots/screenshot-01-home.png)
+
+### 🔐 Login Page
+![Login Page](screenshots/screenshot-02-login.png)
+
+### 📋 Dashboard — Empty State
+![Dashboard Empty](screenshots/screenshot-03-dashboard-empty.png)
+
+### ➕ New Request — Basic Info
+![New Request Form](screenshots/screenshot-04-new-request-form.png)
+
+### 📍 New Request — Location & Schedule
+![New Request Location](screenshots/screenshot-05-new-request-location.png)
+
+### ✏️ New Request — Filled In
+![New Request Filled](screenshots/screenshot-06-new-request-filled.png)
+
+### 🖼️ New Request — Photo Upload Preview
+![Image Upload](screenshots/screenshot-07-image-upload.png)
+
+### 🔍 Request Detail — Status Update & Danger Zone
+![Request Detail](screenshots/screenshot-08-request-detail.png)
+
+### 📊 Dashboard — In Progress Status
+![Dashboard In Progress](screenshots/screenshot-09-dashboard-inprogress.png)
+
+### ✅ Dashboard — Completed Status + Toast Notification
+![Dashboard Completed](screenshots/screenshot-10-dashboard-completed.png)
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
 | Frontend | React 18, Vite, Tailwind CSS, React Router v6, Axios |
 | Backend | Node.js, Express.js, REST API |
-| Database | MySQL 8 with Sequelize ORM |
+| Database | PostgreSQL with Sequelize ORM |
 | Auth | JWT (access token) + bcrypt |
 | File Upload | Multer (local `/uploads` folder) |
 | API Docs | Swagger UI at `/api/docs` |
 | Logging | Winston + Morgan |
+| Frontend Hosting | Vercel |
+| Backend Hosting | Render |
+| Database Hosting | Render PostgreSQL (Free tier) |
 
 ---
 
@@ -22,7 +73,7 @@ A full-stack **Service Request Management Application** for homeowners to book a
 
 - Node.js ≥ 18
 - npm ≥ 9
-- MySQL 8 running locally (or via Docker)
+- MySQL 8 running locally (or PostgreSQL for production)
 
 ---
 
@@ -33,7 +84,7 @@ zepnest/
 ├── backend/
 │   ├── config/          # Database, Multer, Swagger configs
 │   ├── controllers/     # authController, requestController
-│   ├── middleware/       # auth, errorHandler, ownership, validate
+│   ├── middleware/      # auth, errorHandler, ownership, validate
 │   ├── models/          # User, ServiceRequest, index (associations)
 │   ├── routes/          # auth.js, requests.js
 │   ├── utils/           # logger, response helpers
@@ -49,6 +100,7 @@ zepnest/
 │   │   └── pages/       # Home, Login, Register, Dashboard, CreateRequest, RequestDetail
 │   ├── index.html
 │   └── vite.config.js
+├── screenshots/         # App screenshots for README
 ├── schema.sql
 ├── postman_collection.json
 └── README.md
@@ -56,12 +108,12 @@ zepnest/
 
 ---
 
-## Setup & Running
+## Local Setup & Running
 
 ### 1. Clone the repository
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Phaneendra2005/zepnest.git
 cd zepnest
 ```
 
@@ -78,8 +130,6 @@ This creates the `zepnest_db` database, all tables, and seed data.
 ```bash
 cd backend
 npm install
-
-# Copy env template and fill in your values
 cp .env.example .env
 # Edit .env: set DB_USER, DB_PASSWORD, JWT_SECRET
 ```
@@ -102,7 +152,7 @@ npm run dev     # Development (nodemon)
 npm start       # Production
 ```
 
-API runs at **http://localhost:5000**  
+API runs at **http://localhost:5000**
 Swagger docs at **http://localhost:5000/api/docs**
 
 ### 4. Frontend setup
@@ -110,14 +160,37 @@ Swagger docs at **http://localhost:5000/api/docs**
 ```bash
 cd frontend
 npm install
-
 cp .env.example .env
-# Set VITE_API_BASE_URL if needed (default: /api — proxied via Vite)
-
 npm run dev
 ```
 
 Frontend runs at **http://localhost:5173**
+
+---
+
+## Deployment
+
+| Service | Platform | URL |
+|---|---|---|
+| Frontend | Vercel | https://zepnest.vercel.app |
+| Backend | Render | https://zepnest-backend-yx7o.onrender.com |
+| Database | Render PostgreSQL | Oregon (US West) |
+
+### Environment Variables on Render (Backend)
+
+| Key | Value |
+|---|---|
+| `NODE_ENV` | `production` |
+| `DATABASE_URL` | Render internal PostgreSQL URL |
+| `JWT_SECRET` | Your secret key |
+| `JWT_EXPIRES_IN` | `7d` |
+| `FRONTEND_URL` | `https://zepnest.vercel.app` |
+
+### Environment Variables on Vercel (Frontend)
+
+| Key | Value |
+|---|---|
+| `VITE_API_BASE_URL` | `https://zepnest-backend-yx7o.onrender.com/api` |
 
 ---
 
@@ -153,27 +226,15 @@ All endpoints require `Authorization: Bearer <token>` header.
 
 ---
 
-## Seed Users
-
-After running `schema.sql`, you can log in with:
-
-| Email | Password |
-|---|---|
-| alice@example.com | Password1! |
-| bob@example.com | Password1! |
-
----
-
 ## Postman Collection
 
-Import `postman_collection.json` into Postman.  
+Import `postman_collection.json` into Postman.
 The **Register** and **Login** requests automatically set the `token` collection variable.
 
----
-
-## Screenshots
-
-> _Add screenshots of: Home page, Login, Dashboard (grid view), Create Request form, Request Detail with status update_
+Update the `baseUrl` collection variable to:
+```
+https://zepnest-backend-yx7o.onrender.com/api
+```
 
 ---
 
